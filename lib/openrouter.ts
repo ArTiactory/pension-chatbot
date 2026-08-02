@@ -5,4 +5,7 @@ export const openrouter = createOpenRouter({
 })
 
 // Main reasoning model that powers the pension agent.
-export const brain = openrouter.chat('openai/gpt-oss-120b:free')
+export const brain = openrouter.languageModel('openai/gpt-oss-120b:free')
+
+// Web search model for fetching pension company information.
+export const webModel = openrouter.languageModel('openai/gpt-oss-120b:free')
