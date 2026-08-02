@@ -5,8 +5,8 @@ export const openrouter = createOpenRouter({
 })
 
 // Main reasoning model that powers the pension agent.
-// Using Mistral 7B (free tier on OpenRouter)
-export const brain = openrouter.languageModel('mistralai/mistral-7b-instruct:free')
+// Using OpenAI GPT-OSS 20B (free tier on OpenRouter)
+export const brain = openrouter.languageModel('openai/gpt-oss-20b:free')
 
 // Web search model for fetching pension company information.
-export const webModel = openrouter.languageModel('mistralai/mistral-7b-instruct:free')
+export const webModel = openrouter.languageModel('openai/gpt-oss-20b:free')
