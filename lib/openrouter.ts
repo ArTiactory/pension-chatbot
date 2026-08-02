@@ -5,8 +5,8 @@ export const openrouter = createOpenRouter({
 })
 
 // Main reasoning model that powers the pension agent.
-// Using OpenAI GPT-4 Turbo for strong reasoning and Hebrew support
-export const brain = openrouter.languageModel('openai/gpt-oss-20b (free)')
+// Using OpenAI GPT-OSS 20B (free tier on OpenRouter)
+export const brain = openrouter.languageModel('openai/gpt-oss-20b:free')
 
 // Web search model for fetching pension company information.
-export const webModel = openrouter.languageModel('openai/gpt-oss-20b (free)')
+export const webModel = openrouter.languageModel('openai/gpt-oss-20b:free')
