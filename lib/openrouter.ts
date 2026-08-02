@@ -6,6 +6,3 @@ export const openrouter = createOpenRouter({
 
 // Main reasoning model that powers the pension agent.
 export const brain = openrouter.chat('openai/gpt-oss-120b:free')
-
-// Web-enabled model for live company comparison (Perplexity Sonar via OpenRouter).
-export const webModel = openrouter.chat('perplexity/sonar')
