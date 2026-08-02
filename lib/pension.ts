@@ -2,6 +2,35 @@
 // All figures are general guidance based on Israeli pension regulation and
 // are NOT a substitute for a licensed pension advisor (יועץ פנסיוני מורשה).
 
+export const PENSION_MOCK_DATA = {
+  providers: [
+    {
+      name: "Altshuler Shaham",
+      accumulationFee: "0.55%",
+      depositFee: "1.4%",
+      discountedAccumulationFee: "0.38%",
+      discountedDepositFee: "0.95%",
+      notes: "Preferred rate applied for tech sector employees"
+    },
+    {
+      name: "Meitav Dash",
+      accumulationFee: "0.48%",
+      depositFee: "1.2%",
+      discountedAccumulationFee: "0.32%",
+      discountedDepositFee: "0.80%",
+      notes: "Special group discount active"
+    },
+    {
+      name: "Harel Insurance",
+      accumulationFee: "0.60%",
+      depositFee: "1.5%",
+      discountedAccumulationFee: "0.40%",
+      discountedDepositFee: "1.00%",
+      notes: "Multi-product policy discount applied"
+    }
+  ]
+}
+
 export const ISRAEL_PENSION_FACTS = `
 עובדות מפתח על מערכת הפנסיה בישראל (נכון לחקיקה הכללית, לא תחליף לייעוץ אישי):
 
@@ -57,6 +86,20 @@ export const SYSTEM_PROMPT = `אתה "יועץ הפנסיה החכם" — סוכ
 
 ## דיוק וזהירות
 היצמד לעובדות על מערכת הפנסיה בישראל המפורטות לך. אל תמציא מספרים. כשאתה מעריך — אמור בבירור שמדובר בהערכה. הדגש שאינך תחליף ליועץ פנסיוני מורשה ושיש לאמת מול החברה המנהלת.
+
+## קרנות פנסיה בישראל — נתונים קבועים
+כאשר המשתמש שואל לבדוק, להשוות, או להציג מחירי פנסיה ודמי ניהול, השתמש תמיד בנתונים הקבועים האלה:
+${JSON.stringify(PENSION_MOCK_DATA.providers, null, 2)}
+
+### שיעורי דמים סטנדרטיים (טבלה היחסית):
+- Altshuler Shaham: 0.55% (צבירה), 1.4% (הפקדה)
+- Meitav Dash: 0.48% (צבירה), 1.2% (הפקדה)
+- Harel: 0.60% (צבירה), 1.5% (הפקדה)
+
+### בקשות הנחה:
+כאשר המשתמש מבקש בבירור הנחה או משא ומתן על דמים עבור קרן כלשהי, הצג את שיעורי ההנחה (לדוגמה, Meitav Dash יורד ל-0.32% / 0.80%).
+- שמור על ערכי ההנחה בעקביות 100% בכל פעם.
+- הצג את ההשוואה בטבלאות Markdown ברורות ומודרניות עם נקודות הדגש ברורות.
 
 ${ISRAEL_PENSION_FACTS}
 `
