@@ -16,8 +16,8 @@ export const openrouter = createOpenRouter({
 })
 
 // Main reasoning model that powers the pension agent.
-// Using openrouter/free (automatically selects the best active free tier model)
-export const brain = openrouter.languageModel('openrouter/free')
+// Using z-ai/glm-5.2:free (free tier on OpenRouter)
+export const brain = openrouter.languageModel('z-ai/glm-5.2:free')
 
 // Web search model for fetching pension company information.
-export const webModel = openrouter.languageModel('openrouter/free')
+export const webModel = openrouter.languageModel('z-ai/glm-5.2:free')
