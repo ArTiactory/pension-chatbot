@@ -24,8 +24,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  colorScheme: 'dark',
-  themeColor: '#04070e',
+  colorScheme: 'dark light',
 }
 
 export default function RootLayout({
@@ -38,13 +37,13 @@ export default function RootLayout({
       lang="he"
       dir="rtl"
       suppressHydrationWarning
-      className={`${heebo.variable} ${jetbrainsMono.variable} dark`}
+      className={`${heebo.variable} ${jetbrainsMono.variable}`}
     >
       <body className="font-sans antialiased bg-background text-foreground">
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
-          enableSystem={false}
+          enableSystem
           disableTransitionOnChange
         >
           <TooltipProvider>{children}</TooltipProvider>
