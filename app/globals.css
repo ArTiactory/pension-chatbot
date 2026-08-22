@@ -42,6 +42,37 @@
 }
 
 :root {
+  color-scheme: light;
+  --cyan: #008b94;
+  --magenta: #c400b3;
+  --dark-bg: #f4f8fa;
+  --panel-bg: rgba(255, 255, 255, 0.9);
+  --text-main: #081a24;
+  --text-muted: #4a6b7c;
+  --grid-color: rgba(0, 139, 148, 0.06);
+
+  --background: #f4f8fa;
+  --foreground: #081a24;
+  --card: rgba(255, 255, 255, 0.95);
+  --card-foreground: #081a24;
+  --popover: #ffffff;
+  --popover-foreground: #081a24;
+  --primary: #008b94;
+  --primary-foreground: #ffffff;
+  --secondary: rgba(0, 139, 148, 0.1);
+  --secondary-foreground: #008b94;
+  --muted: rgba(0, 139, 148, 0.08);
+  --muted-foreground: #4a6b7c;
+  --accent: #c400b3;
+  --accent-foreground: #ffffff;
+  --destructive: #d9004c;
+  --border: rgba(0, 139, 148, 0.25);
+  --input: rgba(0, 139, 148, 0.2);
+  --ring: #008b94;
+  --radius: 0.75rem;
+}
+
+.dark {
   color-scheme: dark;
   --cyan: #00f3ff;
   --magenta: #ff00ea;
@@ -69,29 +100,6 @@
   --border: rgba(0, 243, 255, 0.3);
   --input: rgba(0, 243, 255, 0.2);
   --ring: #00f3ff;
-  --radius: 0.75rem;
-}
-
-.dark {
-  color-scheme: dark;
-  --background: #04070e;
-  --foreground: #e0faff;
-  --card: rgba(4, 7, 14, 0.85);
-  --card-foreground: #e0faff;
-  --popover: #04070e;
-  --popover-foreground: #e0faff;
-  --primary: #00f3ff;
-  --primary-foreground: #04070e;
-  --secondary: rgba(0, 243, 255, 0.1);
-  --secondary-foreground: #00f3ff;
-  --muted: rgba(0, 243, 255, 0.06);
-  --muted-foreground: #6b8a96;
-  --accent: #ff00ea;
-  --accent-foreground: #ffffff;
-  --destructive: #ff0055;
-  --border: rgba(0, 243, 255, 0.3);
-  --input: rgba(0, 243, 255, 0.2);
-  --ring: #00f3ff;
 }
 
 @layer base {
@@ -101,7 +109,7 @@
   body {
     @apply bg-background text-foreground font-semibold;
     font-family: var(--font-heebo), 'Heebo', sans-serif;
-    background-color: var(--dark-bg);
+    background-color: var(--background);
     background-image: 
       linear-gradient(var(--grid-color) 1px, transparent 1px),
       linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
@@ -118,23 +126,23 @@
     background: var(--panel-bg);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(0, 243, 255, 0.3);
+    border: 1px solid var(--border);
     box-shadow: 0 0 30px rgba(0, 243, 255, 0.1), inset 0 0 20px rgba(0, 243, 255, 0.05);
   }
   
   .glow-cyan {
-    box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+    box-shadow: 0 0 20px var(--primary);
   }
   
   .glow-magenta {
-    box-shadow: 0 0 20px rgba(255, 0, 234, 0.3);
+    box-shadow: 0 0 20px var(--accent);
   }
   
   .text-glow {
-    text-shadow: 0 0 8px #00f3ff;
+    text-shadow: 0 0 8px var(--primary);
   }
 
   .text-glow-magenta {
-    text-shadow: 0 0 8px #ff00ea;
+    text-shadow: 0 0 8px var(--accent);
   }
 }
