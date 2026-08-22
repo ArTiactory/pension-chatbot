@@ -34,10 +34,10 @@ import { CompanyComparison } from '@/components/company-comparison'
 import { ShieldCheck, Sparkles } from 'lucide-react'
 
 const SUGGESTIONS = [
-  'אני בן 35, מרוויח 18,000 ש"ח וצברתי 220,000 ש"ח. האם דמי הניהול שלי גבוהים?',
+  'אני בן 35, מרוויח 18,000 ש"ח וצברתי 220,000 ש"ח בדמי ניהול 2.5% מהפקדה ו-0.25% מצבירה. איפה אני עומד ביחס לשוק?',
   'בנה לי תחזית פנסיה עד גיל 67',
-  'איזו קרן פנסיה מציעה את דמי הניהול הנמוכים ביותר היום?',
-  'תסביר לי איך עובדות ההפרשות לפנסיה בישראל',
+  'איזו קרן פנסיה מציעה את דמי הניהול הטובים ביותר היום?',
+  'האם אתה יכול להשיג לי הנחה מיוחדת ומיקוח בדמי הניהול?',
 ]
 
 function Spinner() {
@@ -189,7 +189,7 @@ export function PensionChat() {
                             className="flex items-center gap-2 text-sm text-muted-foreground"
                           >
                             <Sparkles className="size-4 animate-pulse text-accent" />
-                            מחפש באינטרנט את קרנות הפנסיה המובילות...
+                            פונה לחברות הפנסיה בישראל לקבלת הצעות מחיר...
                           </div>
                         )
 
@@ -243,7 +243,7 @@ export function PensionChat() {
           </PromptInputFooter>
         </PromptInput>
         <p className="mt-2 text-center text-xs text-muted-foreground">
-          המידע הוא להכוונה כללית בלבד בהתאם לחוקי הפנסיה בישראל ואינו תחליף לייעוץ
+          המידע הוא להכוונה כללית בלבד בהתאים לחוקי הפנסיה בישראל ואינו תחליף לייעוץ
           פנסיוני מורשה.
         </p>
       </div>
