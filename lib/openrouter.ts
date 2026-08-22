@@ -1,7 +1,16 @@
 import { createOpenRouter } from '@openrouter/ai-sdk-provider'
 
+const openRouterApiKey =
+  process.env.OPENROUTER_API_KEY_2 ?? process.env.OPENROUTER_API_KEY
+
+if (!openRouterApiKey) {
+  throw new Error(
+    'OpenRouter is not configured. Set OPENROUTER_API_KEY_2 or OPENROUTER_API_KEY.',
+  )
+}
+
 export const openrouter = createOpenRouter({
-  apiKey: process.env.OPENROUTER_API_KEY_2,
+  apiKey: openRouterApiKey,
 })
 
 // Main reasoning model that powers the pension agent.

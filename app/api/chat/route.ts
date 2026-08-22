@@ -220,5 +220,10 @@ export async function POST(req: Request) {
     stopWhen: stepCountIs(8),
   })
 
-  return result.toUIMessageStreamResponse()
+  return result.toUIMessageStreamResponse({
+    onError: (error) => {
+      console.error('[v0] OpenRouter stream error:', error)
+      return 'לא ניתן לקבל תשובה כרגע. בדוק את חיבור OpenRouter ונסה שוב.'
+    },
+  })
 }
