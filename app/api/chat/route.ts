@@ -192,8 +192,7 @@ const tools = {
       const { generateText } = await import('ai')
       const { text, sources } = await generateText({
         model: webModel,
-        prompt: `מצא מידע עדכני (${new Date().getFullYear()}) על קרנות הפנסיה המקיפות המובילות בישראל בדגש על ${focus}.
-החזר רשימה של עד 5 קרנות. עבור כל קרן ציין: שם הקרן/החברה, דמי ניהול טיפוסיים מהפקדה ומצבירה, ותחושת איכות השירות. ענה בעברית.`,
+        prompt: `מצא מידע עדכני (${new Date().getFullYear()}) על קרנות הפנסיה המקיפות המובילות בישראל בדגש על ${focus}.\nהחזר רשימה של עד 5 קרנות. עבור כל קרן ציין: שם הקרן/החברה, דמי ניהול טיפוסיים מהפקדה ומצבירה, ותחושת איכות השירות. ענה בעברית.`,
       })
       return {
         focus,
@@ -210,20 +209,43 @@ const tools = {
 }
 
 export async function POST(req: Request) {
-  const { messages }: { messages: UIMessage[] } = await req.json()
+  try {
+    const { messages }: { messages: UIMessage[] } = await req.json()
 
-  const result = streamText({
-    model: brain,
-    system: SYSTEM_PROMPT,
-    messages: await convertToModelMessages(messages),
-    tools,
-    stopWhen: stepCountIs(8),
-  })
+    let modelMessages
+    try {
+      modelMessages = await convertToModelMessages(messages)
+    } catch {
+      modelMessages = messages.map((m: any) => ({
+        role: m.role,
+        content:
+          typeof m.content === 'string'
+            ? m.content
+            : Array.isArray(m.parts)
+              ? m.parts.map((p: any) => p.text || '').join('')
+              : '',
+      }))
+    }
 
-  return result.toUIMessageStreamResponse({
-    onError: (error) => {
-      console.error('[v0] OpenRouter stream error:', error)
-      return 'לא ניתן לקבל תשובה כרגע. בדוק את חיבור OpenRouter ונסה שוב.'
-    },
-  })
+    const result = streamText({
+      model: brain,
+      system: SYSTEM_PROMPT,
+      messages: modelMessages,
+      tools,
+      stopWhen: stepCountIs(8),
+    })
+
+    return result.toUIMessageStreamResponse({
+      onError: (error) => {
+        console.error('[v0] OpenRouter stream error:', error)
+        return 'לא ניתן לקבל תשובה כרגע. בדוק את חיבור OpenRouter ונסה שוב.'
+      },
+    })
+  } catch (err: any) {
+    console.error('API Chat Route Error:', err)
+    return new Response(
+      JSON.stringify({ error: err?.message || String(err) }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
+    )
+  }
 }
