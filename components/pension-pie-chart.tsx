@@ -20,11 +20,11 @@ import {
 type Slice = { label: string; value: number }
 
 const COLORS = [
-  'var(--chart-1)',
-  'var(--chart-2)',
-  'var(--chart-3)',
-  'var(--chart-4)',
-  'var(--chart-5)',
+  '#00f3ff',
+  '#ff00ea',
+  '#00ffaa',
+  '#ffb700',
+  '#38b6ff',
 ]
 
 export function PensionPieChart({
@@ -50,12 +50,12 @@ export function PensionPieChart({
   const total = slices.reduce((sum, s) => sum + s.value, 0)
 
   return (
-    <Card className="border-border/60">
-      <CardHeader className="pb-2">
-        <CardTitle className="text-base">{title}</CardTitle>
-        <CardDescription>פילוח המצב הפנסיוני הנוכחי</CardDescription>
+    <Card className="border border-border/80 bg-card text-card-foreground shadow-sm">
+      <CardHeader className="pb-2 border-b border-border/40">
+        <CardTitle className="text-base font-extrabold">{title}</CardTitle>
+        <CardDescription className="text-xs text-muted-foreground">פילוח המצב הפנסיוני הנוכחי</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="pt-4">
         <ChartContainer config={config} className="mx-auto aspect-square max-h-[280px]">
           <PieChart>
             <ChartTooltip
@@ -65,7 +65,7 @@ export function PensionPieChart({
                   formatter={(value, name) => (
                     <div className="flex w-full items-center justify-between gap-3">
                       <span className="text-muted-foreground">{name}</span>
-                      <span className="font-mono font-medium">
+                      <span className="font-mono font-bold">
                         {Number(value).toLocaleString('he-IL')}
                         {total > 0
                           ? ` (${Math.round((Number(value) / total) * 100)}%)`
@@ -84,12 +84,12 @@ export function PensionPieChart({
               strokeWidth={2}
             >
               {data.map((entry) => (
-                <Cell key={entry.name} fill={entry.fill} />
+                <Cell key={entry.name} fill={entry.fill} stroke="var(--background)" />
               ))}
             </Pie>
             <ChartLegend
               content={<ChartLegendContent nameKey="name" />}
-              className="flex-wrap gap-x-4 gap-y-1"
+              className="flex-wrap gap-x-4 gap-y-1 font-semibold"
             />
           </PieChart>
         </ChartContainer>
