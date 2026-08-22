@@ -1,11 +1,10 @@
 import { createOpenRouter } from '@openrouter/ai-sdk-provider'
 
-const openRouterApiKey =
-  process.env.OPENROUTER_API_KEY_2 ?? process.env.OPENROUTER_API_KEY
+const openRouterApiKey = process.env.OPENROUTER_API_KEY_2_2
 
 if (!openRouterApiKey) {
   throw new Error(
-    'OpenRouter is not configured. Set OPENROUTER_API_KEY_2 or OPENROUTER_API_KEY.',
+    'OpenRouter is not configured. Set OPENROUTER_API_KEY_2_2.',
   )
 }
 
