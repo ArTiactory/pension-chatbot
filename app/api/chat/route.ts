@@ -6,8 +6,8 @@ import {
   type UIMessage,
 } from 'ai'
 import { z } from 'zod'
-import { SYSTEM_PROMPT } from '@/lib/pension'
-import { brain, webModel } from '@/lib/openrouter'
+import { SYSTEM_PROMPT, PENSION_MOCK_DATA } from '@/lib/pension'
+import { brain } from '@/lib/openrouter'
 
 export const maxDuration = 60
 
@@ -33,7 +33,6 @@ function buildProjection(opts: {
   const salaryAt = (age: number) => {
     const seg = segments.find((s) => age >= s.fromAge && age < s.toAge)
     if (seg) return seg.monthlySalary
-    // fallback to last segment salary
     return segments.length ? segments[segments.length - 1].monthlySalary : 0
   }
 
@@ -56,7 +55,6 @@ function buildProjection(opts: {
 
   for (let age = currentAge; age < retirementAge; age++) {
     const annualContribution = salaryAt(age) * 12 * contributionRate
-    // grow existing balance, then add contributions (mid-year-ish simplification)
     balance = balance * (1 + annualReturn) + annualContribution
     contributions += annualContribution
     points.push({
@@ -94,7 +92,6 @@ const tools = {
     }),
     execute: async (input) => {
       const yearsToRetirement = Math.max(0, input.retirementAge - input.age)
-      // benchmark default fund fees
       const benchmark = { deposit: 1.5, balance: 0.15 }
       const feeVerdict =
         input.managementFeeDeposit > 3 || input.managementFeeBalance > 0.25
@@ -179,30 +176,35 @@ const tools = {
 
   comparePensionCompanies: tool({
     description:
-      'מחפש באינטרנט מידע עדכני על קרנות/חברות הפנסיה בישראל ומדרג אותן לפי דמי ניהול (מחיר) ושירות. השתמש כשהמשתמש רוצה לדעת איזו קרן מציעה את התנאים הטובים ביותר.',
+      'פונה לחברות הפנסיה בישראל ומחזיר השוואת מחירים (רגילים או מוזלים לאחר מיקוח). הפעל כשהמשתמש מבקש השוואה, מוסר מידע פנסיוני, או מבקש הנחה.',
     inputSchema: z.object({
       focus: z
         .string()
+        .optional()
+        .describe('דגש ההשוואה או הסיבה, למשל "השוואת תעריפי שוק"'),
+      includesDiscount: z
+        .boolean()
+        .default(false)
         .describe(
-          'דגש החיפוש, למשל "דמי ניהול נמוכים", "תשואות", "שירות לקוחות"'
+          'True אך ורק אם המשתמש ביקש במפורש הנחה/מיקוח. בלעדיה החזר תעריפים רגילים בלבד.'
         ),
     }),
-    execute: async ({ focus }) => {
-      // Live web search via Perplexity Sonar through the AI Gateway.
-      const { generateText } = await import('ai')
-      const { text, sources } = await generateText({
-        model: webModel,
-        prompt: `מצא מידע עדכני (${new Date().getFullYear()}) על קרנות הפנסיה המקיפות המובילות בישראל בדגש על ${focus}.\nהחזר רשימה של עד 5 קרנות. עבור כל קרן ציין: שם הקרן/החברה, דמי ניהול טיפוסיים מהפקדה ומצבירה, ותחושת איכות השירות. ענה בעברית.`,
-      })
+    execute: async ({ focus, includesDiscount }) => {
+      const providers = PENSION_MOCK_DATA.providers.map((p) => ({
+        id: p.id,
+        name: p.name,
+        depositFee: includesDiscount ? p.discountedDepositFee : p.standardDepositFee,
+        accumulationFee: includesDiscount ? p.discountedAccumulationFee : p.standardAccumulationFee,
+        originalDepositFee: p.standardDepositFee,
+        originalAccumulationFee: p.standardAccumulationFee,
+        serviceRating: p.serviceRating,
+        notes: includesDiscount ? p.notes : undefined,
+      }))
+
       return {
-        focus,
-        summary: text,
-        sources: (sources ?? []).map((s) => ({
-          // @ts-expect-error provider source shape
-          url: s.url ?? '',
-          // @ts-expect-error provider source shape
-          title: s.title ?? s.url ?? '',
-        })),
+        focus: focus || (includesDiscount ? 'הנחות ומיקוח מול חברות הפנסיה' : 'השוואת מחירי שוק סטנדרטיים'),
+        includesDiscount: Boolean(includesDiscount),
+        providers,
       }
     },
   }),
