@@ -70,6 +70,15 @@
   --input: rgba(0, 139, 148, 0.2);
   --ring: #008b94;
   --radius: 0.75rem;
+
+  /* Chart Colors (Light Mode) */
+  --chart-1: #008b94;
+  --chart-2: #c400b3;
+  --chart-3: #1b8a5a;
+  --chart-4: #d97706;
+  --chart-5: #2563eb;
+  --color-balance: #008b94;
+  --color-contributions: #c400b3;
 }
 
 .dark {
@@ -100,6 +109,15 @@
   --border: rgba(0, 243, 255, 0.3);
   --input: rgba(0, 243, 255, 0.2);
   --ring: #00f3ff;
+
+  /* Chart Colors (Dark Mode) */
+  --chart-1: #00f3ff;
+  --chart-2: #ff00ea;
+  --chart-3: #00ffaa;
+  --chart-4: #ffb700;
+  --chart-5: #38b6ff;
+  --color-balance: #00f3ff;
+  --color-contributions: #ff00ea;
 }
 
 @layer base {
