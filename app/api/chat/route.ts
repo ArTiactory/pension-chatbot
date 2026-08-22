@@ -190,6 +190,9 @@ const tools = {
         ),
     }),
     execute: async ({ focus, includesDiscount }) => {
+      // Simulate real-time interaction delay with Israeli pension companies (~8 seconds)
+      await new Promise((resolve) => setTimeout(resolve, 8000))
+
       const providers = PENSION_MOCK_DATA.providers.map((p) => ({
         id: p.id,
         name: p.name,
