@@ -16,8 +16,8 @@ export const openrouter = createOpenRouter({
 })
 
 // Main reasoning model that powers the pension agent.
-// Using Gemma 4 31B (free tier on OpenRouter)
-export const brain = openrouter.languageModel('google/gemma-4-31b-it:free')
+// Using openrouter/free (automatically selects the best active free tier model)
+export const brain = openrouter.languageModel('openrouter/free')
 
 // Web search model for fetching pension company information.
-export const webModel = openrouter.languageModel('google/gemma-4-31b-it:free')
+export const webModel = openrouter.languageModel('openrouter/free')
