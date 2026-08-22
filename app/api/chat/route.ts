@@ -176,17 +176,17 @@ const tools = {
 
   comparePensionCompanies: tool({
     description:
-      'פונה לחברות הפנסיה בישראל ומחזיר השוואת מחירים (רגילים או מוזלים לאחר מיקוח). הפעל כשהמשתמש מבקש השוואה, מוסר מידע פנסיוני, או מבקש הנחה.',
+      'פונה לחברות הפנסיה בישראל ומחזיר השוואת תעריפים. הפעל עם includesDiscount: true אך ורק אם המשתמש ביקש הנחה/מיקוח במפורש.',
     inputSchema: z.object({
       focus: z
         .string()
         .optional()
-        .describe('דגש ההשוואה או הסיבה, למשל "השוואת תעריפי שוק"'),
+        .describe('דגש ההשוואה'),
       includesDiscount: z
         .boolean()
         .default(false)
         .describe(
-          'True אך ורק אם המשתמש ביקש במפורש הנחה/מיקוח. בלעדיה החזר תעריפים רגילים בלבד.'
+          'True אך ורק אם המשתמש ביקש במפורש הנחה או מיקוח. אחרת False.'
         ),
     }),
     execute: async ({ focus, includesDiscount }) => {
@@ -234,6 +234,7 @@ export async function POST(req: Request) {
       system: SYSTEM_PROMPT,
       messages: modelMessages,
       tools,
+      maxTokens: 2000,
       stopWhen: stepCountIs(8),
     })
 
