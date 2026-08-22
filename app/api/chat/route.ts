@@ -237,8 +237,9 @@ export async function POST(req: Request) {
 
     return result.toUIMessageStreamResponse({
       onError: (error) => {
-        console.error('[v0] OpenRouter stream error:', error)
-        return 'לא ניתן לקבל תשובה כרגע. בדוק את חיבור OpenRouter ונסה שוב.'
+        const errorMsg = error instanceof Error ? error.message : JSON.stringify(error)
+        console.error('[v0] OpenRouter stream error:', errorMsg)
+        return `OpenRouter Error: ${errorMsg}`
       },
     })
   } catch (err: any) {
